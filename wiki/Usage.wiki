@@ -1,3 +1,29 @@
+#labels Featured
 #This page talks about quick-json parser usage
 
 = quick-json Usage =
+
+quick-json supports parsing of combination of different formats together
+
+*E.g.*
+
+{{{
+ samplejson = {
+   "key1": value1,
+   "key_2": "value2",
+   key3: value3,
+   key4:234234234,
+   key5:234234.233
+}
+}}}
+
+Value can be looked up by just parsing the above JSON string using parsing API as follows,
+
+{{{
+ JsonParserFactory factory=JsonParserFactory.getInstance();
+ JsonParser parser=factory.newJsonParser();
+ Map jsonData=parser.parse(inputJsonString);
+
+ //lookup the key 'key_2' under Json Block 'samplejson'
+ String value=jsonData.get("samplejson").get("key_2");
+}}}
