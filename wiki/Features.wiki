@@ -4,8 +4,8 @@
 = quick-json features =
 
 # Compliant with JSON specification (RFC4627) <br>
-# High-Performance JSON parser
-# Supports Flexible/Configurable parsing approach
-# Configurable validation of key/value pairs of any JSON Heirarchy
-# Easy to use
-# Raises developer friendly and easy to trace exceptions
+# High-Performance JSON parser <br>
+# Supports Flexible/Configurable parsing approach <br>
+# Configurable validation of key/value pairs of any JSON Heirarchy <br>
+# Easy to use <br>
+# Raises developer friendly and easy to trace exceptions <br>
