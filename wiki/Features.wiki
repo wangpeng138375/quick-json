@@ -1,0 +1,11 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= quick-json features =
+
+* Compliant with JSON specification (RFC4627)
+* High-Performance JSON parser
+* Supports Flexible/Configurable parsing approach
+* Configurable validation of key/value pairs of any JSON Heirarchy
+* Easy to use
+* Raises developer friendly and easy to trace exceptions
