@@ -1,0 +1,53 @@
+#labels Featured
+#parse json the way you want quickly...
+
+=quick-json Parser=
+
+Quick JSON Parser is a simple and flexible parser for parsing input JSON string and return a Map of key/value pairs. This supports name association as well with every JSON block. 
+
+*e.g.*
+
+{{{
+ samplejson = {
+   "key1": "value1",
+   "key2": "value2",
+   "key3": "value3"
+}
+}}}
+
+Now Map generated out of the above mentioned JSON String will look like,
+
+A map with one key as 'samplejson' and its value as another map of key/value pairs. i.e. it will be very easy for the developers to look up for a specific key within json hierarchy.
+
+
+This parser supports input JSON string of following notation as well...
+
+{{{
+ samplejson = {
+   key1: "value1",
+   key2: "value2",
+   key3: "value3"
+}
+}}}
+
+*or*
+
+{{{
+ samplejson = {
+   key1: value1,
+   key2: value2,
+   key3: value3
+}
+}}}
+
+Value can be looked up by just parsing the above JSON string using parsing API as follows,
+
+{{{
+ JsonParserFactory factory=JsonParserFactory.getInstance();
+ JsonParser parser=factory.newJsonParser();
+ Map jsonData=parser.parse(inputJsonString);
+
+ //lookup the key 'key2' under Json Block 'samplejson'
+ String value=jsonData.get("samplejson").get("key2");
+}}}
+ 
