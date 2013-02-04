@@ -27,3 +27,28 @@ Value can be looked up by just parsing the above JSON string using parsing API a
  //lookup the key 'key_2' under Json Block 'samplejson'
  String value=jsonData.get("samplejson").get("key_2");
 }}}
+
+
+
+{{{
+{
+"employees": [
+{ "firstName":"Rajesh" , "lastName":"Putta" }, 
+{ "firstName":"Rajesh" , "lastName":"P" }, 
+{ "firstName":"first name" , "lastName":"last name" }
+]
+}
+}}}
+
+
+Value can be looked up by just parsing the above JSON string using parsing API as follows,
+
+{{{
+ JsonParserFactory factory=JsonParserFactory.getInstance();
+ JsonParser parser=factory.newJsonParser();
+ Map jsonData=parser.parse(inputJsonString);
+
+ List al=jsonData.get("employees");
+ String fName=((Map)al.get(0)).get("firstName");
+ String lName=((Map)al.get(0)).get("lastName");
+}}}
