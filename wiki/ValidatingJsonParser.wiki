@@ -61,3 +61,13 @@ Validation configuration for the above JSON string would be,
 *root* configuration is for validating the root level, this is mandatory to validate the root level is JSON/JSON_ARRAY
 
 *sample* configuration is for the key/value pairs under sample json string. As per the above configuration, *default* configuration is applicable for all the key/value pairs whenever there is no specific validation configured for keys. In this case *key2* requirement is to have separate validation configuration. so overriding the default one.
+
+*Validation data types*
+{{{
+JSON - validates for JSON presence
+JSON_ARRAY - validates for JSON_ARRAY presence
+STRING_LITERAL - validates for double quoted string presence
+STRING - Validates for simple string with alphanumeric data
+INTEGER - Validates for number data, doesn't allow double type of values
+DOUBLE - Validates for number data, allows double type of values
+}}}
