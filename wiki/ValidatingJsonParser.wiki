@@ -23,3 +23,41 @@ Below is the sample way of initializing and working with validating parser.
  Map jsonData=parser.parseJson(inputJsonString);
 
 }}}
+
+
+*E.g.1*
+
+*Input JSON String*
+
+{{{
+sample={
+"key":"value",
+"key1":"value1",
+"key2":234234234
+}
+}}}
+
+Validation configuration for the above JSON string would be,
+
+{{{
+<json-config>
+	<json-heirarchy path="root">
+		<KeyValues>
+			<KeyValue name="ROOT" valueType="JSON"/>
+		</KeyValues>
+	</json-heirarchy>
+
+	<json-heirarchy path="sample">
+		<KeyValues>
+			<KeyValue name="default" valueType="STRING_LITERAL"/>
+			<KeyValue name="key2" valueType="INTEGER"/>
+		</KeyValues>
+	</json-heirarchy>
+	
+</json-config>
+}}}
+
+
+*root* configuration is for validating the root level, this is mandatory to validate the root level is JSON/JSON_ARRAY
+
+*sample* configuration is for the key/value pairs under sample json string. As per the above configuration, *default* configuration is applicable for all the key/value pairs whenever there is no specific validation configured for keys. In this case *key2* requirement is to have separate validation configuration. so overriding the default one.
