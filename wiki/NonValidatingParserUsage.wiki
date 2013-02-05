@@ -22,7 +22,7 @@ Value can be looked up by just parsing the above JSON string using parsing API a
 {{{
  JsonParserFactory factory=JsonParserFactory.getInstance();
  JsonParser parser=factory.newJsonParser();
- Map jsonData=parser.parse(inputJsonString);
+ Map jsonData=parser.parseJson(inputJsonString);
 
  //lookup the key 'key_2' under Json Block 'samplejson'
  String value=jsonData.get("samplejson").get("key_2");
@@ -46,7 +46,7 @@ Value can be looked up by just parsing the above JSON string using parsing API a
 {{{
  JsonParserFactory factory=JsonParserFactory.getInstance();
  JsonParser parser=factory.newJsonParser();
- Map jsonData=parser.parse(inputJsonString);
+ Map jsonData=parser.parseJson(inputJsonString);
 
 Map rootJson=jsonData.get("root");
  List al=rootJson.get("employees");
@@ -86,7 +86,7 @@ postalCode under address sub-json can be looked up by implementing as follows,
 {{{
  JsonParserFactory factory=JsonParserFactory.getInstance();
  JsonParser parser=factory.newJsonParser();
- Map jsonData=parser.parse(inputJsonString);
+ Map jsonData=parser.parseJson(inputJsonString);
 
  Map rootMap=jsonData.get("root");
  Map addressMap=rootMap.get("address");
