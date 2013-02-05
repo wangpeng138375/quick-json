@@ -1,0 +1,24 @@
+# This page talks about Validating quick-json parser usage
+
+= Validating quick-json parser Usage =
+
+Validating quick json parser can be used whenever json has to be validated at every level to see if the format is expected or not. Keys/Values, Sub-Json, Array and its elements can be validated. 
+
+What/When/Where needs to be validated ? All this information is expected to be passed to the parser during initialization.
+
+Below is the sample way of initializing and working with validating parser.
+
+{{{
+ JsonParserFactory factory=JsonParserFactory.getInstance();
+ JsonParser parser=factory.newJsonParser();
+
+//initialize parser with the json validation configuration file stream
+ parser.initialize(xml_stream));
+			
+//configure parser for validating
+ parser.setValidating(true);
+
+//parse input json string with validating parser instance
+ Map jsonData=parser.parseJson(inputJsonString);
+
+}}}
