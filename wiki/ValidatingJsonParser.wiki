@@ -68,6 +68,6 @@ JSON - validates for JSON presence
 JSON_ARRAY - validates for JSON_ARRAY presence
 STRING_LITERAL - validates for double quoted string presence
 STRING - Validates for simple string with alphanumeric data
-INTEGER - Validates for number data, doesn't allow double type of values
+INTEGER - Validates for number data, doesnt allow double type of values
 DOUBLE - Validates for number data, allows double type of values
 }}}
