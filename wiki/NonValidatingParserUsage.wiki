@@ -1,9 +1,9 @@
 #labels Featured
-# This page talks about non-validating quick-json parser usage
+# This page talks about quick-json non-validating parser usage
 
-= Non-Validating quick-json Usage =
+= quick-json Non-Validating parser Usage =
 
-Non-Validating quick-json parser supports parsing of different formats of json strings which are compliant with JSON spec. Parser throws developer friendly exceptions in case of there is any syntax/semantic issues.
+quick-json Non-Validating parser supports parsing of different formats of json strings which are compliant with JSON spec. Parser throws developer friendly exceptions in case of there is any syntax/semantic issues.
 
 *E.g.*
 
