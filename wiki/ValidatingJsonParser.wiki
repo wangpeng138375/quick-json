@@ -70,3 +70,47 @@ Validation configuration for the above JSON string would be,
 ||STRING || Validates for simple string with alphanumeric data||
 ||INTEGER || Validates for number data, doesnt allow double type of values||
 ||DOUBLE || Validates for number data, allows double type of values||
+
+
+
+*E.g.2*
+
+*Input JSON String*
+
+{{{
+sample={
+"key":"value",
+"key1":["value1",234234.32,adfasdf],
+"key2":234234234
+}
+}}}
+
+Validation Configuration for the above json string would be,
+
+{{{
+<json-config>
+	<json-heirarchy path="root">
+		<KeyValues>
+			<KeyValue name="ROOT" valueType="JSON"/>
+		</KeyValues>
+	</json-heirarchy>
+
+	<json-heirarchy path="sample">
+		<KeyValues>
+			<KeyValue name="default" valueType="STRING_LITERAL"/>
+			<KeyValue name="key1" valueType="JSON_ARRAY"/>
+			<KeyValue name="key2" valueType="INTEGER"/>
+		</KeyValues>
+	</json-heirarchy>
+	
+	<json-heirarchy path="sample.key1">
+		<KeyValues>
+			<KeyValue name="default" valueType="STRING_LITERAL"/>
+			<KeyValue index="1" valueType="DOUBLE"/>
+			<KeyValue index="2" valueType="STRING"/>
+		</KeyValues>
+	</json-heirarchy>	
+	
+</json-config>
+}}}
+
