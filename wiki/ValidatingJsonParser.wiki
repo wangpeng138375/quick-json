@@ -157,7 +157,7 @@ Validation Configuration for the above JSON would be,
 	
 	<json-heirarchy path="sample.key1[0]">
 		<KeyValues>
-			<KeyValue name="default" valueType="STRING_LITERAL"/>
+			<KeyValue name="default" valueType="STRING"/>
 		</KeyValues>
 	</json-heirarchy>	
 </json-config>
