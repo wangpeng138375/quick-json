@@ -1,9 +1,9 @@
 #labels Featured
 # This page talks about Validating quick-json parser usage
 
-= Validating quick-json parser Usage =
+= quick-json Validating parser Usage =
 
-Validating quick json parser can be used whenever json has to be validated at every level to see if the format is expected or not. Keys/Values, Sub-Json, Array and its elements can be validated. 
+quick json validating parser can be used whenever json has to be validated at every level to see if the format is expected or not. Keys/Values, Sub-Json, Array and its elements can be validated. 
 
 What/When/Where needs to be validated ? All this information is expected to be passed to the parser during initialization.
 
