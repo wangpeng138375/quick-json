@@ -203,3 +203,43 @@ In this case, JSON block is not assigned with any name. so default name would be
 	</json-heirarchy>	
 </json-config>
 }}}
+
+*E.g.5*
+
+{{{
+{
+"key":"value",
+"key1":[234234.32,adfasdf],
+"key2":[arrayvalue,arrayvalue1,arrayvalue2]
+}
+}}}
+
+Validation Configuration for the above JSON would be,
+
+{{{
+<json-config>
+	<json-heirarchy path="root">
+		<KeyValues>
+			<KeyValue name="ROOT" valueType="JSON"/>
+			<KeyValue name="key1" valueType="JSON_ARRAY"/>
+			<KeyValue name="key2" valueType="JSON_ARRAY"/>
+		</KeyValues>
+	</json-heirarchy>
+
+	<json-heirarchy path="root/key1">
+		<KeyValues>
+			<KeyValue index="0" valueType="DOUBLE"/>
+			<KeyValue index="1" valueType="STRING"/>
+		</KeyValues>
+	</json-heirarchy>
+
+	<json-heirarchy path="root/key2">
+		<KeyValues>
+			<KeyValue index="0" valueType="STRING"/>
+			<KeyValue index="1" valueType="STRING"/>
+			<KeyValue index="2" valueType="STRING"/>
+		</KeyValues>
+	</json-heirarchy>	
+	
+</json-config>
+}}}
