@@ -162,3 +162,44 @@ Validation Configuration for the above JSON would be,
 	</json-heirarchy>	
 </json-config>
 }}}
+
+
+*E.g.4*
+{{{
+{
+"key":"value",
+"key1":[{
+	subjsonkey:subjsonvalue,
+	subjsonkey1:subjsonvalue1
+},234234.32,adfasdf],
+"key2":234234234
+}
+}}}
+
+In this case, JSON block is not assigned with any name. so default name would be root.Validation configuration for the above JSON would be,
+
+{{{
+<json-config>
+	<json-heirarchy path="root">
+		<KeyValues>
+			<KeyValue name="ROOT" valueType="JSON"/>
+			<KeyValue name="key1" valueType="JSON_ARRAY"/>
+			<KeyValue name="key2" valueType="INTEGER"/>
+		</KeyValues>
+	</json-heirarchy>
+
+	<json-heirarchy path="root/key1">
+		<KeyValues>
+			<KeyValue index="0" valueType="JSON"/>
+			<KeyValue index="1" valueType="DOUBLE"/>
+			<KeyValue index="2" valueType="STRING"/>
+		</KeyValues>
+	</json-heirarchy>
+	
+	<json-heirarchy path="root/key1[0]">
+		<KeyValues>
+			<KeyValue name="default" valueType="STRING"/>
+		</KeyValues>
+	</json-heirarchy>	
+</json-config>
+}}}
