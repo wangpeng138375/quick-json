@@ -103,7 +103,7 @@ Validation Configuration for the above json string would be,
 		</KeyValues>
 	</json-heirarchy>
 	
-	<json-heirarchy path="sample.key1">
+	<json-heirarchy path="sample/key1">
 		<KeyValues>
 			<KeyValue name="default" valueType="STRING_LITERAL"/>
 			<KeyValue index="1" valueType="DOUBLE"/>
@@ -147,7 +147,7 @@ Validation Configuration for the above JSON would be,
 		</KeyValues>
 	</json-heirarchy>
 	
-	<json-heirarchy path="sample.key1">
+	<json-heirarchy path="sample/key1">
 		<KeyValues>
 			<KeyValue index="0" valueType="JSON"/>
 			<KeyValue index="1" valueType="DOUBLE"/>
@@ -155,7 +155,7 @@ Validation Configuration for the above JSON would be,
 		</KeyValues>
 	</json-heirarchy>
 	
-	<json-heirarchy path="sample.key1[0]">
+	<json-heirarchy path="sample/key1[0]">
 		<KeyValues>
 			<KeyValue name="default" valueType="STRING"/>
 		</KeyValues>
