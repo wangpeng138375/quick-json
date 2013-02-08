@@ -392,7 +392,7 @@ Validation configuration for the above json would be,
 			<KeyValue name="ROOT" valueType="JSON_ARRAY"/>
 			<KeyValue index="0" valueType="JSON"/>
 			<KeyValue index="1" valueType="JSON"/>
-			<KeyValue index="2" valueType="STRING_LITERAL"/>
+			<KeyValue index="2" valueType="NULL"/>
 			<KeyValue index="3" valueType="DOUBLE"/>
 		</KeyValues>
 	</json-heirarchy>
