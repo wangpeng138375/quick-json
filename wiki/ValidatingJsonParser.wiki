@@ -70,6 +70,8 @@ Validation configuration for the above JSON string would be,
 ||STRING || Validates for simple string with alphanumeric data||
 ||INTEGER || Validates for number data, doesnt allow double type of values||
 ||DOUBLE || Validates for number data, allows double type of values||
+||BOOLEAN || Validates for boolean value (true or false)||
+||NULL || Validates for null ||
 
 
 
