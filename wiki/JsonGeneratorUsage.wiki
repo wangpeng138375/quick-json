@@ -63,3 +63,9 @@ Here is the implementation for serializing the above data set
 		JSONGenerator generator=factory.newJsonGenerator();
 		String json=generator.generateJson(data);
 }}}
+
+Here is the serialized data object,
+
+{{{
+[{"age":28,"doublearray":[234.0,555.0,777.0,888.0],"floatarray":[1,2,34,35],"set-pojo":["asdfasfd",{"name":"Rajesh","age":28,"ss":3223.33,"data":{"2":20,"1":10},},2343,234],"subdata":{"3":"3","2":"2","1":"1"},"objectarray":[{"2":20,"1":10},{"2":20,"1":10},{"name":"Rajesh","age":28,"ss":3223.33,"data":{"2":20,"1":10},}],"name":"Rajesh Putta","chararray":[a,b,c],"city":"hyderabad","array":[234,555,777,888]}]
+}}}
