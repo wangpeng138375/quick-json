@@ -1,7 +1,7 @@
 #labels Featured
-# This page talks about the usage of JsonGenerator to serialize java objects to json format
+# This page talks about the usage of Json Generator to serialize java objects to json format
 
-= JsonGenerator Usage =
+= Json Generator Usage =
 
 JSONGenerator helps in serializing the java objects to JSON format.
 
