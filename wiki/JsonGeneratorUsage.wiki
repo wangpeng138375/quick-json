@@ -1,0 +1,65 @@
+#labels Featured
+# This page talks about the usage of JsonGenerator to serialize java objects to json format
+
+= JsonGenerator Usage =
+
+JSONGenerator helps in serializing the java objects to JSON format.
+
+- Supports serialization of Classes, Map, List, Set, Properties, String, Date, Integer, Float, Double, Boolean, etc types of data
+
+- Strictly adheres to the JSON spec during serialization process
+
+*E.g.*
+
+Here is the example data set hierarchy to be serialized to JSON format,
+
+{{{
+		Map data=new HashMap();
+		
+		Properties prop=new Properties();
+		
+		prop.setProperty("1", "1");
+		prop.setProperty("2", "2");
+		prop.setProperty("3", "3");
+		
+		data.put("name", "Rajesh Putta");
+		data.put("age", 28);
+		data.put("city", new StringBuilder("hyderabad"));
+		data.put("subdata", prop);
+		data.put("array", new int[]{234,555,777,888});
+		data.put("chararray", new char[]{'a','b','c'});
+		data.put("doublearray", new double[]{234,555,777,888});
+		data.put("floatarray", new byte[]{1,2,34,35});
+
+		Map submap=new HashMap();
+		submap.put(1, 10);
+		submap.put(2, 20);		
+		
+		TestPojo tp=new TestPojo();
+		
+		tp.setAge(28);
+		tp.setName("Rajesh");
+		tp.setSs(3223.33);
+		tp.setData(submap);		
+		
+		Set set=new HashSet();
+		set.add(234);
+		set.add(2343);
+		set.add("asdfasfd");
+		set.add(tp);
+		
+
+		data.put("set-pojo", set);
+		
+
+		data.put("objectarray", new Object[]{submap,set,submap,tp});
+}}}
+
+
+Here is the implementation for serializing the above data set
+
+{{{
+		JsonGeneratorFactory factory=JsonGeneratorFactory.getInstance();
+		JSONGenerator generator=factory.newJsonGenerator();
+		String json=generator.generateJson(data);
+}}}
