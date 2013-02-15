@@ -5,7 +5,7 @@
 
 JSONGenerator helps in serializing the java objects to JSON format.
 
-- Supports serialization of Classes, Map, List, Set, Properties, String, Date, Integer, Float, Double, Boolean, etc types of data
+- Supports serialization of Classes, Arrays, Map, List, Set, Properties, String, Date, Integer, Float, Double, Boolean, etc types of data
 
 - Strictly adheres to the JSON spec during serialization process
 
