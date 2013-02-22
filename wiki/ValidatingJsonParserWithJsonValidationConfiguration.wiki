@@ -14,7 +14,7 @@ JsonParserFactory factory=JsonParserFactory.getInstance();
 
 JSONParser parser=factory.newJsonParser(ValidationConfigType.JSON);
 			
-parser.initializeWithJson(JSONParser.class.getClassLoader().getResourceAsStream("com/json/config/json-config.json"));
+parser.initializeWithJson(json_based_validation_config_stream);
 			
 parser.setValidating(true);
 
