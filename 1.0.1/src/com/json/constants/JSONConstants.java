@@ -18,16 +18,6 @@
 
 package com.json.constants;
 
-import javax.swing.event.ListSelectionEvent;
-
-import com.json.serializers.ArraySerializer;
-import com.json.serializers.ClassSerializer;
-import com.json.serializers.DateSerializer;
-import com.json.serializers.JsonSerializer;
-import com.json.serializers.ListSerializer;
-import com.json.serializers.MapSerializer;
-import com.json.serializers.PropertiesSerializer;
-import com.json.serializers.SetSerializer;
 
 
 public class JSONConstants {
@@ -79,5 +69,7 @@ public class JSONConstants {
 	public static final String S="short";
 	public static final String B="boolean";
 	public static final String L="long";
+	public static final String TILDE_DELE="~~";
+	public static final String DEFAULT_ENCODING="UTF-8";
 }
 
