@@ -69,6 +69,27 @@ public class JSONUtility {
 		return null;
 	}
 	
+	public static String readStream(InputStream is,String encoding)
+	{
+		BufferedReader br=null;
+		try {
+			br=new BufferedReader(new InputStreamReader(is,Charset.forName(encoding)));			
+			return readChunks(br,encoding);
+		} catch (Exception e) {
+			new JSONParsingException("Configuration Reading failed for stream..."+is);
+		}
+		finally{
+			if(br!=null)
+			{
+				try{
+				br.close();}catch (Exception e) {
+				}
+			}			
+		}
+		
+		return null;
+	}
+	
 	public static String readChunks(BufferedReader br,String encoding)  throws Exception
 	{
 		char[] charBuffer = new char[8192];

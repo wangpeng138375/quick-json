@@ -17,6 +17,11 @@
 
 package com.json.parsers;
 
+import com.json.config.handlers.ConfigHandler;
+import com.json.config.handlers.JsonConfigHandler;
+import com.json.config.handlers.ValidationConfigType;
+import com.json.config.handlers.XmlConfigHandler;
+
 public class JsonParserFactory {
 	private static JsonParserFactory instance=null;
 	
@@ -41,6 +46,33 @@ public class JsonParserFactory {
 	
 	public JSONParser newJsonParser()
 	{
-		return new JSONParser();
+		JSONParser parser=new JSONParser();
+		
+		ConfigHandler configHandler=new XmlConfigHandler();
+		
+		parser.setConfigHandler(configHandler);
+		
+		return parser;
 	}
+	
+	public JSONParser newJsonParser(ValidationConfigType type)
+	{
+		JSONParser parser=new JSONParser();
+		
+		ConfigHandler configHandler=null;
+		
+		switch(type)
+		{
+			case JSON: configHandler=new JsonConfigHandler();
+					   break;
+			case XML:
+			default: configHandler=new XmlConfigHandler();
+		}
+
+		configHandler.setParserSelfInstance(parser);
+		
+		parser.setConfigHandler(configHandler);
+		
+		return parser;
+	}	
 }

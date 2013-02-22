@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Map;
 
+import com.json.config.handlers.ValidationConfigType;
 import com.json.parsers.JSONParser;
 import com.json.parsers.JsonParserFactory;
 
@@ -15,11 +16,11 @@ public class TestClient {
 		BufferedReader br=null;
 		try{
 			JsonParserFactory factory=JsonParserFactory.getInstance();
-			JSONParser parser=factory.newJsonParser();
+			JSONParser parser=factory.newJsonParser(ValidationConfigType.JSON);
 			
-			parser.initialize(JSONParser.class.getClassLoader().getResourceAsStream("com/json/config/json-config.xml"));
+			parser.initializeWithJson(JSONParser.class.getClassLoader().getResourceAsStream("com/json/config/json-config.json"));
 			
-			parser.setValidating(false);
+			parser.setValidating(true);
 			
 			br=new BufferedReader(new InputStreamReader(new FileInputStream("C:/Users/Putta's/Desktop/json-files/test.json"),Charset.forName("UTF-8")));
 			String content=fetchContent(br);

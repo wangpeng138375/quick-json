@@ -15,65 +15,52 @@
  * 
  */
 
-
 package com.json.config.handlers;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import com.json.constants.JSONConstants;
 import com.json.exceptions.JSONConfigInitializationException;
-import com.json.utils.CachedInstances;
+import com.json.parsers.JSONParser;
 
-public class JsonConfigHandler extends DefaultHandler{
-	private static JsonConfigHandler configHandler=null;
-	private Map<String,HashMap<String,String>> configMap=new HashMap<String,HashMap<String,String>>(6,(float)0.5);
-	private HashMap<String,String> tempMap=new HashMap<String,String>();
+public class JsonConfigHandler implements ConfigHandler{
+	@SuppressWarnings("rawtypes")
+	private Map configMap=null;
 	private InputStream stream=null;
-	
-	public static JsonConfigHandler newInstance()
-	{
-		if(configHandler==null)
-		{
-			synchronized(JsonConfigHandler.class)
-			{
-				if(configHandler==null)
-				{
-					configHandler=new JsonConfigHandler();
-				}
-			}
-		}
-		
-		return configHandler;
-	}
+	private String encoding=JSONConstants.DEFAULT_ENCODING;
+	private JSONParser parser=null;
 	
 	public void setStream(InputStream is){
 		stream=is;
 	}
 	
+	public void setEncoding(String encoding)
+	{
+		this.encoding=encoding;
+	}
+	
+	public void setParserSelfInstance(JSONParser parser)
+	{
+		this.parser=parser;
+	}
+	
 	public void parse()
 	{
+		if(parser==null)
+			throw new JSONConfigInitializationException("JSON Parser instance is not initialized...is required to parser json based validation config....");
+		
 		try{
-			SAXParserFactory factory=SAXParserFactory.newInstance();
-			SAXParser parser=factory.newSAXParser();
+			configMap=parser.parseJson(stream,encoding);
 			
-			parser.parse(stream, this);
-			
-//			//System.out.println(configMap);
+			transform();
 		}
 		catch (Exception e) {
 			throw new JSONConfigInitializationException(e);
 		}
 		finally{
-			tempMap=null;
 			if(stream!=null)
 			{
 				try{
@@ -84,68 +71,60 @@ public class JsonConfigHandler extends DefaultHandler{
 		}		
 	}
 	
-	public static void main(String[] args) {
-		JsonConfigHandler.newInstance().setStream(JsonConfigHandler.class.getClassLoader().getResourceAsStream("com/json/config/json-config.xml"));
-		JsonConfigHandler.newInstance().parse();
-	}
-	
-	public JsonConfigHandler() {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void transform()
+	{
+		Map rootMap=(HashMap)configMap.get("root");
+		if(rootMap==null)
+			throw new JSONConfigInitializationException("validation configuration is not available...");
 
+		StringBuilder temp=new StringBuilder();
+		StringBuilder sb=new StringBuilder();
+		Map tempMap=null;
+		
+		for(Iterator i=rootMap.keySet().iterator();i.hasNext();)
+		{
+			String rootKey=(String)i.next();
+			Map rootValueMap=(HashMap)rootMap.get(rootKey);
+			
+			tempMap=new HashMap();
+			
+			for(Iterator it=rootValueMap.entrySet().iterator();it.hasNext();)
+			{
+				Map.Entry entry=(Map.Entry)it.next();
+				String name=(String)entry.getKey();
+				Map valueMap=(HashMap)entry.getValue();
+				
+				sb.delete(0, sb.length());
+				sb.append(name).append(JSONConstants.TILDE_DELE);
+				
+				for(Iterator ite=valueMap.entrySet().iterator();ite.hasNext();)
+				{
+					Map.Entry<String, String> ent=(Map.Entry<String,String>)ite.next();
+					String key=ent.getKey();
+					String value=ent.getValue();
+					
+					temp.delete(0, temp.length());
+					tempMap.put(temp.append(sb).append(key).toString(),value);
+				}
+			}
+			
+			configMap.remove(rootKey);
+			configMap.put(rootKey, tempMap);
+		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public HashMap<String,String> getPatternMap(String path)
 	{
-		HashMap<String,String> patternMap=this.configMap.get(path);
+		HashMap<String,String> patternMap=(HashMap<String,String>)this.configMap.get(path);
 		
 		if(patternMap==null)
 		{
-//			throw new JSONParsingException("Validation Configuration Map is null for JSON Heirarchy..."+path);
-			
 			patternMap=new HashMap<String,String>();
 			patternMap.put("default~~valueType", JSONConstants.STRING_LITERAL);
 		}
 		
 		return patternMap;
-	}
-	
-	@Override
-	public void startElement(String arg0, String arg1, String arg2,
-			Attributes attrib) throws SAXException {
-		
-		if(arg2.equalsIgnoreCase("KeyValue"))
-		{
-			String name=attrib.getValue("name");
-			String index=attrib.getValue("index");
-			
-			if(name==null && index==null)
-				throw new JSONConfigInitializationException("Either name or index attribute is mandatory for KeyValue tag element...");
-			
-			name=(name==null)?index:name;
-			
-			String key=new StringBuilder(name).append("~~").toString();
-			
-			tempMap.put(new StringBuilder(key).append("keyPattern").toString(), attrib.getValue("keyPattern"));
-			tempMap.put(new StringBuilder(key).append("valuePattern").toString(), attrib.getValue("valuePattern"));
-			tempMap.put(new StringBuilder(key).append("valueType").toString(), attrib.getValue("valueType"));
-			tempMap.put(new StringBuilder(key).append("keyValidator").toString(), attrib.getValue("keyValidator"));
-			tempMap.put(new StringBuilder(key).append("valueValidator").toString(), attrib.getValue("valueValidator"));
-		}
-		else if(arg2.equalsIgnoreCase("json-heirarchy"))
-		{
-			HashMap<String,String> patternMap=configMap.get(attrib.getValue("path"));
-			
-			if(patternMap==null)
-			{
-				patternMap=new HashMap<String,String>();
-				
-				configMap.put(attrib.getValue("path"), patternMap);
-			}
-			
-			tempMap=patternMap;
-		}
-		else if(arg2.equalsIgnoreCase("custom-validator"))
-		{
-			CachedInstances.getInstance().loadAndCacheInstance(attrib.getValue("alias"),attrib.getValue("class"));
-		}
-	}
+	}	
 }

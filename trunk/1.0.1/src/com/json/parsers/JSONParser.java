@@ -25,7 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import com.json.config.handlers.ConfigHandler;
 import com.json.config.handlers.JsonConfigHandler;
+import com.json.config.handlers.XmlConfigHandler;
 import com.json.constants.JSONConstants;
 import com.json.utils.CachedInstances;
 import com.json.utils.JSONUtility;
@@ -41,15 +43,27 @@ public class JSONParser {
 	private StringBuilder value=new StringBuilder();
 	private String jsonBlockName=null;
 	private boolean isValidating=false;
+	private ConfigHandler configHandler=null;
+	
 	
 	public void setValidating(boolean isValidating)
 	{
 		this.isValidating=isValidating;
 	}
 	
+	public void setConfigHandler(ConfigHandler configHandler)
+	{
+		this.configHandler=configHandler;
+	}
+	
 	public void initialize(InputStream is)
 	{
-		JsonConfigHandler configHandler=JsonConfigHandler.newInstance();
+		configHandler.setStream(is);
+		configHandler.parse();
+	}
+
+	public void initializeWithJson(InputStream is)
+	{
 		configHandler.setStream(is);
 		configHandler.parse();
 	}
@@ -57,9 +71,14 @@ public class JSONParser {
 	public void initialize(String classPathResource)
 	{
 		InputStream is=JSONUtility.getStream(classPathResource);
-		JsonConfigHandler configHandler=JsonConfigHandler.newInstance();
 		configHandler.setStream(is);
 		configHandler.parse();
+	}	
+	
+	@SuppressWarnings("rawtypes")
+	public Map parseJson(InputStream stream,String encoding) {
+		String content=JSONUtility.readStream(stream, encoding);
+		return parseJson(content);
 	}	
 	
 	@SuppressWarnings("rawtypes")
@@ -736,9 +755,9 @@ public class JSONParser {
 		{
 			sb.append(s).append(JSONConstants.SLASH);
 		}
-		HashMap<String,String> patternMap=JsonConfigHandler.newInstance().getPatternMap(sb.substring(0,sb.length()-1));
+		HashMap<String,String> patternMap=configHandler.getPatternMap(sb.substring(0,sb.length()-1));
 		
-		String pattern=patternMap.get(new StringBuilder(key).append("~~").append(attribute).toString());
+		String pattern=patternMap.get(new StringBuilder(key).append(JSONConstants.TILDE_DELE).append(attribute).toString());
 		
 		if(pattern==null)
 		{
@@ -948,5 +967,5 @@ public class JSONParser {
 		}
 		
 		return index;
-	}	
+	}
 }

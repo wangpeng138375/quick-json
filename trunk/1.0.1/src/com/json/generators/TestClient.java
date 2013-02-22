@@ -21,7 +21,7 @@ public class TestClient {
 		prop.setProperty("3", "3");
 		
 		data.put("name", "Rajesh Putta");
-		data.put("age", 29);
+		data.put("age", 28);
 		data.put("city", new StringBuilder("hyderabad"));
 		data.put("subdata", prop);
 		data.put("array", new int[]{234,555,777,888});
@@ -36,7 +36,7 @@ public class TestClient {
 		
 		TestPojo tp=new TestPojo();
 		
-		tp.setAge(33);
+		tp.setAge(28);
 		tp.setName("Rajesh");
 		tp.setSs(3223.33);
 		tp.setData(submap);		
