@@ -10,14 +10,15 @@ What/When/Where needs to be validated ? All this information is expected to be p
 Below is the sample way of initializing and working with validating parser with JSON based validation configuration.
 
 {{{
- 			JsonParserFactory factory=JsonParserFactory.getInstance();
-			JSONParser parser=factory.newJsonParser(ValidationConfigType.JSON);
+JsonParserFactory factory=JsonParserFactory.getInstance();
+
+JSONParser parser=factory.newJsonParser(ValidationConfigType.JSON);
 			
-			parser.initializeWithJson(JSONParser.class.getClassLoader().getResourceAsStream("com/json/config/json-config.json"));
+parser.initializeWithJson(JSONParser.class.getClassLoader().getResourceAsStream("com/json/config/json-config.json"));
 			
-			parser.setValidating(true);
+parser.setValidating(true);
 
 //parse input json string with validating parser instance
- Map jsonData=parser.parseJson(inputJsonString);
+Map jsonData=parser.parseJson(inputJsonString);
 
 }}}
