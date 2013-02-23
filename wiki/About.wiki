@@ -1,9 +1,7 @@
 #labels Featured
-#parse json the way you want quickly...
-
 =quick-json Parser=
 
-Quick JSON Parser is a simple and flexible parser for parsing input JSON string and return a Map of key/value pairs. This supports name association as well with every JSON block. 
+Quick JSON Parser is a simple and flexible parser for parsing input JSON string and return a Map of key/value pairs. This supports name association as well with every JSON block. This parser supports validating/non-validating versions. Validating parser version is a strict parser and it does parsing based upon pre-configured validation rules. Non-Validating parser verifies the standards of json while parsing and will not validate keys/values and will not apply any custom validations at all.
 
 *e.g.*
 
@@ -50,4 +48,349 @@ Value can be looked up by just parsing the above JSON string using parsing API a
  //lookup the key 'key2' under Json Block 'samplejson'
  String value=jsonData.get("samplejson").get("key2");
 }}}
- 
+
+simple example of json string,
+
+{{{
+[{
+"key":"value",
+"key1":[234234.32,adfasdf],
+"key2":[arrayvalue,arrayvalue1,arrayvalue2]
+},
+{
+"key":{
+        subjsonkey:subjsonvalue
+        }
+},
+"Rajesh Putta",
+234234.23]
+}}}
+
+===quick-json features===
+
+# Compliant with JSON specification (RFC4627) <br><br>
+# High-Performance JSON parser  <br><br>
+# Supports Flexible/Configurable parsing approach  <br><br>
+# Configurable validation of key/value pairs of any JSON Heirarchy  <br><br>
+# Easy to use  # Very Less foot print <br><br>
+# Raises developer friendly and easy to trace exceptions <br><br>
+# Pluggable Custom Validation support - Keys/Values can be validated by configuring custom   validators as and when encountered <br><br>
+# Validating and Non-Validating parser support <br><br>
+# Support for two types of configuration (JSON/XML) for using quick-json validating parser <br><br>
+# Require JDK 1.5 # No dependency on external libraries <br><br>
+# Support for Json Generation through object serialization <br><br>
+# Support for collection type selection during parsing process <br><br>
+
+
+= quick-json Non-Validating parser Usage =
+
+quick-json Non-Validating parser supports parsing of different formats of json strings which are compliant with JSON spec. Parser throws developer friendly exceptions in case of there is any syntax/semantic issues.
+
+*E.g.*
+
+{{{
+ samplejson = {
+   "key1": value1,
+   "key_2": "value2",
+   key3: value3,
+   key4:234234234,
+   key5:234234.233
+}
+}}}
+
+Value can be looked up by just parsing the above JSON string using parsing API as follows,
+
+{{{
+ JsonParserFactory factory=JsonParserFactory.getInstance();
+ JsonParser parser=factory.newJsonParser();
+ Map jsonData=parser.parseJson(inputJsonString);
+
+ //lookup the key 'key_2' under Json Block 'samplejson'
+ String value=jsonData.get("samplejson").get("key_2");
+}}}
+
+
+
+{{{
+{
+"employees": [
+{ "firstName":"Rajesh" , "lastName":"Putta" }, 
+{ "firstName":"Rajesh" , "lastName":"P" }, 
+{ "firstName":"first name" , "lastName":"last name" }
+]
+}
+}}}
+
+
+Value can be looked up by just parsing the above JSON string using parsing API as follows,
+
+{{{
+ JsonParserFactory factory=JsonParserFactory.getInstance();
+ JsonParser parser=factory.newJsonParser();
+ Map jsonData=parser.parseJson(inputJsonString);
+
+Map rootJson=jsonData.get("root");
+ List al=rootJson.get("employees");
+ String fName=((Map)al.get(0)).get("firstName");
+ String lName=((Map)al.get(0)).get("lastName");
+}}}
+
+<br><br>
+
+= quick-json Validating parser Usage =
+
+quick json validating parser can be used whenever json has to be validated at every level to see if the format is expected or not. Keys/Values, Sub-Json, Array and its elements can be validated. 
+
+What/When/Where needs to be validated ? All this information is expected to be passed to the parser during initialization.
+
+Below is the sample way of initializing and working with validating parser.
+
+{{{
+ JsonParserFactory factory=JsonParserFactory.getInstance();
+ JsonParser parser=factory.newJsonParser();
+
+//initialize parser with the json validation configuration file stream
+ parser.initialize(xml_stream));
+			
+//configure parser for validating
+ parser.setValidating(true);
+
+//parse input json string with validating parser instance
+ Map jsonData=parser.parseJson(inputJsonString);
+
+}}}
+
+
+*E.g.1*
+
+*Input JSON String*
+
+{{{
+sample={
+"key":"value",
+"key1":"value1",
+"key2":234234234
+}
+}}}
+
+Validation configuration for the above JSON string would be,
+
+{{{
+<json-config>
+	<json-heirarchy path="root">
+		<KeyValues>
+			<KeyValue name="ROOT" valueType="JSON"/>
+		</KeyValues>
+	</json-heirarchy>
+
+	<json-heirarchy path="sample">
+		<KeyValues>
+			<KeyValue name="default" valueType="STRING_LITERAL"/>
+			<KeyValue name="key2" valueType="INTEGER"/>
+		</KeyValues>
+	</json-heirarchy>
+	
+</json-config>
+}}}
+
+
+*root* configuration is for validating the root level, this is mandatory to validate the root level is JSON/JSON_ARRAY
+
+*sample* configuration is for the key/value pairs under sample json string. As per the above configuration, *default* configuration is applicable for all the key/value pairs whenever there is no specific validation configured for keys. In this case *key2* requirement is to have separate validation configuration. so overriding the default one.
+
+*Validation data types*
+
+||JSON || validates for JSON presence||
+||JSON_ARRAY || validates for JSON_ARRAY presence||
+||STRING_LITERAL || validates for double quoted string presence||
+||STRING || Validates for simple string with alphanumeric data||
+||INTEGER || Validates for number data, doesnt allow double type of values||
+||DOUBLE || Validates for number data, allows double type of values||
+||BOOLEAN || Validates for boolean value (true or false)||
+||NULL || Validates for null ||
+
+
+
+*E.g.2*
+
+*Input JSON String*
+
+{{{
+sample={
+"key":"value",
+"key1":["value1",234234.32,adfasdf],
+"key2":234234234
+}
+}}}
+
+Validation Configuration for the above json string would be,
+
+{{{
+<json-config>
+	<json-heirarchy path="root">
+		<KeyValues>
+			<KeyValue name="ROOT" valueType="JSON"/>
+		</KeyValues>
+	</json-heirarchy>
+
+	<json-heirarchy path="sample">
+		<KeyValues>
+			<KeyValue name="default" valueType="STRING_LITERAL"/>
+			<KeyValue name="key1" valueType="JSON_ARRAY"/>
+			<KeyValue name="key2" valueType="INTEGER"/>
+		</KeyValues>
+	</json-heirarchy>
+	
+	<json-heirarchy path="sample/key1">
+		<KeyValues>
+			<KeyValue name="default" valueType="STRING_LITERAL"/>
+			<KeyValue index="1" valueType="DOUBLE"/>
+			<KeyValue index="2" valueType="STRING"/>
+		</KeyValues>
+	</json-heirarchy>	
+	
+</json-config>
+}}}
+<br><br>
+
+= quick-json Validating parser Usage - with JSON based validation configuration =
+
+quick json validating parser can be configure with JSON based validation configuration  whenever other json has to be validated at every level to see if the format is expected or not. Keys/Values, Sub-Json, Array and its elements can be validated. 
+
+What/When/Where needs to be validated ? All this information is expected to be passed to the parser during initialization.
+
+Below is the sample way of initializing and working with validating parser with JSON based validation configuration.
+
+{{{
+JsonParserFactory factory=JsonParserFactory.getInstance();
+
+JSONParser parser=factory.newJsonParser(ValidationConfigType.JSON);
+			
+parser.initializeWithJson(json_based_validation_config_stream);
+			
+parser.setValidating(true);
+
+//parse input json string with validating parser instance
+Map jsonData=parser.parseJson(inputJsonString);
+
+}}}
+
+*E.g.1*
+
+{{{
+[{
+"key":"value",
+"key1":[234234.32,true ],
+"key2":[arrayvalue,arrayvalue1,arrayvalue2]
+},
+{
+"key":{
+	subjsonkey:subjsonvalue
+	}
+},
+"Rajesh Putta",
+234234.23]
+}}}
+
+Below would be the JSON based validation configuration,
+
+{{{
+{
+	"root":{
+		"ROOT":{valueType:"JSON_ARRAY"},
+		"0":{valueType:"JSON"},
+		"1":{valueType:"JSON"},
+		"2":{valueType:"STRING_LITERAL"},
+		"3":{valueType:"DOUBLE"}
+	},
+	"root[0]":{
+		"key1":{valueType:"JSON_ARRAY"},
+		"key2":{valueType:"JSON_ARRAY"}
+	},
+	"root[1]":{
+		"key":{valueType:"JSON"}
+	},
+	"root[0]/key1":{
+		"0":{valueType:"DOUBLE"},
+		"1":{valueType:"BOOLEAN"}
+	},
+	"root[0]/key2":{
+		"default":{valueType:"STRING"}
+	},
+	"root[1]/key":{
+		"default":{valueType:"STRING"}
+	},
+}
+}}}
+
+
+
+<br><br>
+= Json Generator Usage =
+
+JSONGenerator helps in serializing the java objects to JSON format.
+
+- Supports serialization of Classes, Arrays, Map, List, Set, Properties, String, Date, Integer, Float, Double, Boolean, etc types of data
+
+- Strictly adheres to the JSON spec during serialization process
+
+*E.g.*
+
+Here is the example data set hierarchy to be serialized to JSON format,
+
+{{{
+		Map data=new HashMap();
+		
+		Properties prop=new Properties();
+		
+		prop.setProperty("1", "1");
+		prop.setProperty("2", "2");
+		prop.setProperty("3", "3");
+		
+		data.put("name", "Rajesh Putta");
+		data.put("age", 28);
+		data.put("city", new StringBuilder("hyderabad"));
+		data.put("subdata", prop);
+		data.put("array", new int[]{234,555,777,888});
+		data.put("chararray", new char[]{'a','b','c'});
+		data.put("doublearray", new double[]{234,555,777,888});
+		data.put("floatarray", new byte[]{1,2,34,35});
+
+		Map submap=new HashMap();
+		submap.put(1, 10);
+		submap.put(2, 20);		
+		
+		TestPojo tp=new TestPojo();
+		
+		tp.setAge(28);
+		tp.setName("Rajesh");
+		tp.setSs(3223.33);
+		tp.setData(submap);		
+		
+		Set set=new HashSet();
+		set.add(234);
+		set.add(2343);
+		set.add("asdfasfd");
+		set.add(tp);
+		
+
+		data.put("set-pojo", set);
+		
+
+		data.put("objectarray", new Object[]{submap,set,submap,tp});
+}}}
+
+
+Here is the implementation for serializing the above data set
+
+{{{
+		JsonGeneratorFactory factory=JsonGeneratorFactory.getInstance();
+		JSONGenerator generator=factory.newJsonGenerator();
+		String json=generator.generateJson(data);
+}}}
+
+Here is the serialized data object,
+
+{{{
+[{"age":28,"doublearray":[234.0,555.0,777.0,888.0],"floatarray":[1,2,34,35],"set-pojo":["asdfasfd",{"name":"Rajesh","age":28,"ss":3223.33,"data":{"2":20,"1":10},},2343,234],"subdata":{"3":"3","2":"2","1":"1"},"objectarray":[{"2":20,"1":10},{"2":20,"1":10},{"name":"Rajesh","age":28,"ss":3223.33,"data":{"2":20,"1":10},}],"name":"Rajesh Putta","chararray":[a,b,c],"city":"hyderabad","array":[234,555,777,888]}]
+}}}
