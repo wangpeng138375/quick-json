@@ -1,7 +1,11 @@
 #labels Featured
 # This page is to list out sample json examples
 
+*E.g.1*
+
 {{{
+JSON:
+
 {
     "glossary": {
         "title": "example glossary",
@@ -24,4 +28,56 @@
         }
     }
 }
+
+The same text expressed as XML:
+
+<!DOCTYPE glossary PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
+ <glossary><title>example glossary</title>
+  <GlossDiv><title>S</title>
+   <GlossList>
+    <GlossEntry ID="SGML" SortAs="SGML">
+     <GlossTerm>Standard Generalized Markup Language</GlossTerm>
+     <Acronym>SGML</Acronym>
+     <Abbrev>ISO 8879:1986</Abbrev>
+     <GlossDef>
+      <para>A meta-markup language, used to create markup
+languages such as DocBook.</para>
+      <GlossSeeAlso OtherTerm="GML">
+      <GlossSeeAlso OtherTerm="XML">
+     </GlossDef>
+     <GlossSee OtherTerm="markup">
+    </GlossEntry>
+   </GlossList>
+  </GlossDiv>
+ </glossary>
 }}}
+
+
+*E.g.2*
+
+{{{
+JSON:
+
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}
+
+The same text expressed as XML:
+
+<menu id="file" value="File">
+  <popup>
+    <menuitem value="New" onclick="CreateNewDoc()" />
+    <menuitem value="Open" onclick="OpenDoc()" />
+    <menuitem value="Close" onclick="CloseDoc()" />
+  </popup>
+</menu>
+}}}
+
