@@ -28,9 +28,11 @@ JSON:
         }
     }
 }
+}}}
 
 <br>*The same text expressed as XML:*<br>
 
+{{{
 <!DOCTYPE glossary PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
  <glossary><title>example glossary</title>
   <GlossDiv><title>S</title>
@@ -69,9 +71,10 @@ JSON:
     ]
   }
 }}
+}}}
 
 <br>*The same text expressed as XML:*<br>
-
+{{{
 <menu id="file" value="File">
   <popup>
     <menuitem value="New" onclick="CreateNewDoc()" />
@@ -112,9 +115,10 @@ JSON:
         "alignment": "center",
         "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
     }
-}}    
+}}   
+}}} 
 <br>*The same text expressed as XML:*<br>
-
+{{{
 <widget>
     <debug>on</debug>
     <window title="Sample Konfabulator Widget">
@@ -234,8 +238,11 @@ JSON:
   "taglib": {
     "taglib-uri": "cofax.tld",
     "taglib-location": "/WEB-INF/tlds/cofax.tld"}}}
-The same file expressed as XML:
+}}}
 
+<br>*The same file expressed as XML:*<br>
+
+{{{
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE web-app
@@ -653,8 +660,10 @@ JSON:
         {"id": "About", "label": "About Adobe CVG Viewer..."}
     ]
 }}
+}}}
 <br>*The same message expressed as XML:*<br>
 
+{{{
 <menu>
     <header>Adobe SVG Viewer</header>
     <item action="Open" id="Open">Open</item>
