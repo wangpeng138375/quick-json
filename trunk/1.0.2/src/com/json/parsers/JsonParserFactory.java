@@ -92,5 +92,19 @@ public class JsonParserFactory {
 		});
 		
 		return parser;
-	}	
+	}
+	
+	public JSONParser newJsonParser(CollectionTypes collectionTypes)
+	{
+		JSONParser parser= newJsonParser();
+		parser.setCollectionTypes(collectionTypes);
+		return parser;
+	}
+	
+	public JSONParser newJsonParser(ValidationConfigType type, CollectionTypes collectionTypes)
+	{
+		JSONParser parser=newJsonParser(type);
+		parser.setCollectionTypes(collectionTypes);
+		return parser;
+	}
 }
