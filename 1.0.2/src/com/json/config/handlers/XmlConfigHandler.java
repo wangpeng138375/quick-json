@@ -34,10 +34,12 @@ import com.json.exceptions.JSONConfigInitializationException;
 import com.json.parsers.JSONParser;
 import com.json.utils.CachedInstances;
 
+@SuppressWarnings("unused")
 public class XmlConfigHandler extends DefaultHandler implements ConfigHandler{
 	private Map<String,HashMap<String,String>> configMap=new HashMap<String,HashMap<String,String>>(6,(float)0.5);
 	private HashMap<String,String> tempMap=new HashMap<String,String>();
 	private InputStream stream=null;
+	
 	private String encoding=JSONConstants.DEFAULT_ENCODING;
 	
 	public void setStream(InputStream is){

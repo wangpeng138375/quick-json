@@ -17,8 +17,12 @@
 
 package com.json.validations.custom;
 
+import java.util.List;
+
 public class PatternValidator implements SpecialValidator{
-	public boolean validate(String token) {
-		return true;
+
+	@SuppressWarnings("rawtypes")
+	public boolean validate(String token, List jsonHeirarchy) {
+		return false;
 	}
 }
