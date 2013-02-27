@@ -17,6 +17,9 @@
 
 package com.json.validations.custom;
 
+import java.util.List;
+
 public interface SpecialValidator {
-	boolean validate(String token);
+	@SuppressWarnings("rawtypes")
+	boolean validate(String token,List jsonHeirarchy);
 }

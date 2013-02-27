@@ -15,18 +15,19 @@ public class TestClient {
 	{
 		BufferedReader br=null;
 		try{
-			JsonParserFactory factory=JsonParserFactory.getInstance();
-			JSONParser parser=factory.newJsonParser(ValidationConfigType.JSON);
-			
-			parser.initializeWithJson(JSONParser.class.getClassLoader().getResourceAsStream("com/json/config/json-config.json"));
-			
-			parser.setValidating(true);
 			
 			br=new BufferedReader(new InputStreamReader(new FileInputStream("C:/Users/Putta's/Desktop/json-files/test.json"),Charset.forName("UTF-8")));
 			String content=fetchContent(br);
 			
-			long currentTime=System.currentTimeMillis();			
+			JsonParserFactory factory=JsonParserFactory.getInstance();
+			JSONParser parser=factory.newJsonParser();
+			parser.initialize(JSONParser.class.getClassLoader().getResourceAsStream("com/json/config/json-config.xml"));
+			
+			parser.setValidating(true);
 			Map finalJsonData=parser.parseJson(content);
+			
+			long currentTime=System.currentTimeMillis();			
+
 			System.out.println("Time Taken In Millis ::"+(System.currentTimeMillis()-currentTime));
 			
 			System.out.println("Final Map ------------------------------------------------------------------------------------");

@@ -293,7 +293,7 @@ public class JSONParser {
 		if(keyValidator!=null)
 		{
 			SpecialValidator validator=CachedInstances.getInstance().getValidatorInstance(keyValidator);
-			if(!validator.validate(key.toString()))
+			if(!validator.validate(key.toString(),heirarchyList))
 			{
 				JSONUtility.handleFailure(heirarchyList,key,"Key validation failed...json-block::",jsonBlockName,"\tKey::"+key+"\tValidator::",String.valueOf(keyValidator));
 			}
@@ -749,7 +749,7 @@ public class JSONParser {
 		if(valueValidator!=null)
 		{
 			SpecialValidator validator=CachedInstances.getInstance().getValidatorInstance(valueValidator);
-			if(!validator.validate(temp.toString()))
+			if(!validator.validate(temp.toString(),heirarchyList))
 			{
 				JSONUtility.handleFailure(heirarchyList,key,"Value validation failed...json-block::",jsonBlockName,"\tKey::",key.toString(),"\tValidator::",valueValidator);
 			}
@@ -787,7 +787,28 @@ public class JSONParser {
 		{
 			sb.append(s).append(JSONConstants.SLASH);
 		}
-		HashMap<String,String> patternMap=configHandler.getPatternMap(sb.substring(0,sb.length()-1));
+		
+		int index=sb.length()-1;
+		
+		
+		if(key.trim().equals(""))
+		{
+			if(sb.charAt(--index)==JSONConstants.JSON_ARRY_END)
+			{
+				for(;index>0;)
+				{
+					if(sb.charAt(--index)==JSONConstants.JSON_ARRAY_START)
+					{
+						index--;
+						break;
+					}
+				}
+			}
+		}
+		else
+			index--;
+		
+		HashMap<String,String> patternMap=configHandler.getPatternMap(sb.substring(0,index+1));
 		
 		String pattern=patternMap.get(new StringBuilder(key).append(JSONConstants.TILDE_DELE).append(attribute).toString());
 		
