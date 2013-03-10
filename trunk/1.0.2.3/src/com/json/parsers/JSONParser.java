@@ -700,7 +700,15 @@ public class JSONParser {
 		boolean valueFound=false;
 		boolean isDotPresent=false;
 		boolean isNumber=true;
+		boolean isNegative=false;
 		int tempindex=index;
+		
+		if(content.charAt(index)==JSONConstants.HYPHEN)
+		{
+			isNegative=true;
+			temp.append(JSONConstants.HYPHEN);
+			index=skipWhiteSpace(content, index+1, JSONConstants.VALUE);
+		}
 		
 		char ch;
 		
@@ -737,6 +745,9 @@ public class JSONParser {
 		}
 		
 		if(valueFound && !isNumber && isDotPresent)
+			JSONUtility.handleFailure(heirarchyList, key, "Invalid VALUE_TOKEN...@Position::",String.valueOf(tempindex));
+		
+		if(isNegative && !isNumber)
 			JSONUtility.handleFailure(heirarchyList, key, "Invalid VALUE_TOKEN...@Position::",String.valueOf(tempindex));
 		
 		index=skipWhiteSpace(content, index, String.valueOf(JSONConstants.COMMA));
